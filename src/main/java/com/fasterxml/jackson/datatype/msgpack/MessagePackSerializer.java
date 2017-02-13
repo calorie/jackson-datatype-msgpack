@@ -1,3 +1,18 @@
+//
+// jackson-datatype-msgpack
+//
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+//
 package com.fasterxml.jackson.datatype.msgpack;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -31,30 +46,31 @@ public class MessagePackSerializer extends StdSerializer<Value>
     private void writeFieldName(Value value, JsonGenerator generator)
             throws IOException
     {
-        generator.writeFieldName(value.asStringValue().toString()); // TODO
+        generator.writeFieldName(value.asStringValue().toString());
     }
 
     private void writeValue(Value value, JsonGenerator generator)
             throws IOException
     {
+        // TODO this conversion should be customized by users.
         switch (value.getValueType()) {
             case NIL:
                 generator.writeNull();
                 break;
             case BOOLEAN:
-                generator.writeBoolean(value.asBooleanValue().getBoolean()); // TODO
+                generator.writeBoolean(value.asBooleanValue().getBoolean());
                 break;
             case INTEGER:
-                generator.writeNumber(value.asIntegerValue().toLong()); // TODO
+                generator.writeNumber(value.asIntegerValue().toLong());
                 break;
             case FLOAT:
-                generator.writeNumber(value.asFloatValue().toDouble()); // TODO
+                generator.writeNumber(value.asFloatValue().toDouble());
                 break;
             case STRING:
-                generator.writeNumber(value.asStringValue().toString()); // TODO
+                generator.writeNumber(value.asStringValue().toString());
                 break;
             case BINARY:
-                generator.writeBinary(value.asBinaryValue().asByteArray()); // TODO
+                generator.writeBinary(value.asBinaryValue().asByteArray());
                 break;
             case ARRAY:
                 writeArrayValue(value.asArrayValue(), generator);
