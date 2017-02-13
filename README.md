@@ -36,10 +36,10 @@ public class Sample
                 .build();
         System.out.println("1: " + mapper.writeValueAsString(v));
 
-        ObjectNode on = JsonNodeFactory.instance.objectNode();
-        on.set("k3", JsonNodeFactory.instance.textNode("v3"));
-        on.set("k4", JsonNodeFactory.instance.textNode("v4"));
-
+        JsonNodeFactory factory = JsonNodeFactory.instance;
+        ObjectNode on = factory.objectNode();
+        on.set("k3", factory.textNode("v3"));
+        on.set("k4", factory.textNode("v4"));
         System.out.println("2: " + mapper.treeToValue(on, Value.class).toJson());
     }
 }

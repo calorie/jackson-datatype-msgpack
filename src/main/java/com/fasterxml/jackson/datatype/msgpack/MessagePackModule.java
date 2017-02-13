@@ -20,6 +20,10 @@ import com.fasterxml.jackson.core.util.VersionUtil;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
 
+/**
+ * Module to add support for reading and writing MessagePack Value objects from and to Json
+ * @see com.fasterxml.jackson.databind.ObjectMapper#registerModule
+ */
 public class MessagePackModule
         extends Module
 {
