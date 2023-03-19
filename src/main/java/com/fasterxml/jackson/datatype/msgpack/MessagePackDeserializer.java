@@ -13,6 +13,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 //
+
 package com.fasterxml.jackson.datatype.msgpack;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -21,34 +22,25 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import org.msgpack.value.Value;
-import org.msgpack.value.ValueFactory;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.msgpack.value.Value;
+import org.msgpack.value.ValueFactory;
 
-public class MessagePackDeserializer
-        extends StdDeserializer<Value>
-{
-    public MessagePackDeserializer()
-            throws JsonMappingException
-    {
+public class MessagePackDeserializer extends StdDeserializer<Value> {
+    public MessagePackDeserializer() throws JsonMappingException {
         super(Value.class);
     }
 
     @Override
-    public Value deserialize(JsonParser parser, DeserializationContext context)
-            throws IOException
-    {
+    public Value deserialize(JsonParser parser, DeserializationContext context) throws IOException {
         return populate(parser);
     }
 
-    private Value populate(JsonParser parser)
-            throws IOException
-    {
+    private Value populate(JsonParser parser) throws IOException {
         JsonToken token = parser.getCurrentToken();
         if (token == null) {
             return null;
@@ -56,10 +48,8 @@ public class MessagePackDeserializer
         return jsonTokenToValue(parser, token);
     }
 
-    private Value jsonTokenToValue(JsonParser parser, JsonToken token)
-            throws IOException
-    {
-        switch(token) {
+    private Value jsonTokenToValue(JsonParser parser, JsonToken token) throws IOException {
+        switch (token) {
             case VALUE_NULL:
                 return ValueFactory.newNil();
             case VALUE_TRUE:
@@ -71,8 +61,7 @@ public class MessagePackDeserializer
             case VALUE_NUMBER_INT:
                 try {
                     return ValueFactory.newInteger(parser.getLongValue());
-                }
-                catch (JsonParseException ex) {
+                } catch (JsonParseException ex) {
                     return ValueFactory.newInteger(parser.getBigIntegerValue());
                 }
             case VALUE_STRING:
@@ -83,9 +72,8 @@ public class MessagePackDeserializer
                     token = parser.nextToken();
                     if (token == JsonToken.END_ARRAY) {
                         return ValueFactory.newArray(list);
-                    }
-                    else if (token == null) {
-                        throw new JsonParseException("Unexpected end of JSON", parser.getTokenLocation());
+                    } else if (token == null) {
+                        throw new JsonParseException(parser, "Unexpected end of JSON");
                     }
                     list.add(jsonTokenToValue(parser, token));
                 }
@@ -96,17 +84,16 @@ public class MessagePackDeserializer
                     token = parser.nextToken();
                     if (token == JsonToken.END_OBJECT) {
                         return ValueFactory.newMap(map);
-                    }
-                    else if (token == null) {
-                        throw new JsonParseException("Unexpected end of JSON", parser.getTokenLocation());
+                    } else if (token == null) {
+                        throw new JsonParseException(parser, "Unexpected end of JSON");
                     }
                     String key = parser.getCurrentName();
                     if (key == null) {
-                        throw new JsonParseException("Unexpected token " + token, parser.getTokenLocation());
+                        throw new JsonParseException(parser, "Unexpected token " + token);
                     }
                     token = parser.nextToken();
                     if (token == null) {
-                        throw new JsonParseException("Unexpected end of JSON", parser.getTokenLocation());
+                        throw new JsonParseException(parser, "Unexpected end of JSON");
                     }
                     Value value = jsonTokenToValue(parser, token);
                     map.put(ValueFactory.newString(key), value);
@@ -117,7 +104,7 @@ public class MessagePackDeserializer
             case END_OBJECT:
             case NOT_AVAILABLE:
             default:
-                throw new JsonParseException("Unexpected token " + token, parser.getTokenLocation());
+                throw new JsonParseException(parser, "Unexpected token " + token);
         }
     }
 }

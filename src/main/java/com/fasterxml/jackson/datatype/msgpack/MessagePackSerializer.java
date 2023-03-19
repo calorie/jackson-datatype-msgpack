@@ -13,45 +13,36 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 //
+
 package com.fasterxml.jackson.datatype.msgpack;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
-
 import org.msgpack.value.ArrayValue;
 import org.msgpack.value.MapValue;
 import org.msgpack.value.Value;
 
-import static java.util.Locale.ENGLISH;
 
-public class MessagePackSerializer extends StdSerializer<Value>
-{
-    public MessagePackSerializer()
-    {
+public class MessagePackSerializer extends StdSerializer<Value> {
+    public MessagePackSerializer() {
         super(Value.class);
     }
 
     @Override
-    public void serialize(Value value, JsonGenerator generator, SerializerProvider serializerProvider)
-            throws IOException
-    {
+    public void serialize(Value value, JsonGenerator generator, SerializerProvider serializerProvider) throws IOException {
         writeValue(value, generator);
     }
 
-    private void writeFieldName(Value value, JsonGenerator generator)
-            throws IOException
-    {
+    private void writeFieldName(Value value, JsonGenerator generator) throws IOException {
         generator.writeFieldName(value.asStringValue().toString());
     }
 
-    private void writeValue(Value value, JsonGenerator generator)
-            throws IOException
-    {
+    private void writeValue(Value value, JsonGenerator generator) throws IOException {
         // TODO this conversion should be customized by users.
         switch (value.getValueType()) {
             case NIL:
@@ -79,23 +70,19 @@ public class MessagePackSerializer extends StdSerializer<Value>
                 writeMapValue(value.asMapValue(), generator);
                 break;
             default:
-                throwUnknownTypeException(value);
+                throwUnknownTypeException(value, generator);
         }
     }
 
-    private void writeArrayValue(ArrayValue value, JsonGenerator generator)
-            throws IOException
-    {
-        generator.writeStartArray(value.size());
+    private void writeArrayValue(ArrayValue value, JsonGenerator generator) throws IOException {
+        generator.writeStartArray();
         for (Value v : value.list()) {
             writeValue(v, generator);
         }
         generator.writeEndArray();
     }
 
-    private void writeMapValue(MapValue value, JsonGenerator generator)
-            throws IOException
-    {
+    private void writeMapValue(MapValue value, JsonGenerator generator) throws IOException {
         generator.writeStartObject();
         for (Map.Entry<Value, Value> kv : value.entrySet()) {
             writeFieldName(kv.getKey(), generator);
@@ -104,10 +91,8 @@ public class MessagePackSerializer extends StdSerializer<Value>
         generator.writeEndObject();
     }
 
-    private void throwUnknownTypeException(Value value)
-            throws IOException
-    {
-        String message = String.format(ENGLISH, "Unknown MessagePack type: %s", value.getValueType().toString());
-        throw new JsonMappingException(message);
+    private void throwUnknownTypeException(Value value, JsonGenerator generator) throws IOException {
+        String message = String.format(Locale.ENGLISH, "Unknown MessagePack type: %s", value.getValueType().toString());
+        throw new JsonMappingException(generator, message);
     }
 }
