@@ -2,10 +2,12 @@ plugins {
     id "java"
     id "java-library"
     id "checkstyle"
+    id 'maven-publish'
 }
 
 group = 'com.fasterxml.jackson.datatype'
 version = '0.1.0'
+description = "Jackson module that adds support for serializing and deserializing MessagePack's Values to and from JSON."
 
 repositories {
     mavenCentral()
@@ -72,5 +74,4 @@ checkstyle {
     toolVersion "9.3"
     configFile = file("${projectDir}/config/checkstyle/checkstyle.xml")
     ignoreFailures = true
-    maxWarnings = 0  // https://github.com/gradle/gradle/issues/881
 }
