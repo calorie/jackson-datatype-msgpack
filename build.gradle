@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.fasterxml.jackson.datatype'
-version = '0.1.0'
+version = '0.1.1'
 description = "Jackson module that adds support for serializing and deserializing MessagePack's Values to and from JSON."
 
 repositories {
