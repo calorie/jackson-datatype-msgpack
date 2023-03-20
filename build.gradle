@@ -76,3 +76,21 @@ checkstyle {
     configFile = file("${projectDir}/config/checkstyle/checkstyle.xml")
     ignoreFailures = true
 }
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/calorie/jackson-datatype-msgpack")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from components.java
+        }
+    }
+}

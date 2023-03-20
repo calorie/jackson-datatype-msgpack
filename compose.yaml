@@ -3,5 +3,5 @@ services:
   java:
     image: eclipse-temurin:8
     volumes:
-      - .:/app
-    working_dir: /app
+      - .:/msgpack
+    working_dir: /msgpack
