@@ -90,6 +90,8 @@ publishing {
     }
     publications {
         gpr(MavenPublication) {
+            artifactId = 'msgpack'
+
             from components.java
         }
     }
