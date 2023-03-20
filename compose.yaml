@@ -3,5 +3,5 @@ services:
   java:
     image: eclipse-temurin:8
     volumes:
-      - .:/msgpack
-    working_dir: /msgpack
+      - .:/jackson-datatype-msgpack
+    working_dir: /jackson-datatype-msgpack
