@@ -6,7 +6,7 @@ Jackson module that adds support for serializing and deserializing MessagePack's
 
 GitHub Packages:
 
-https://github.com/calorie/jackson-datatype-msgpack/packages/1816861
+https://github.com/calorie/jackson-datatype-msgpack/packages/1817140
 
 ## Usage
 
