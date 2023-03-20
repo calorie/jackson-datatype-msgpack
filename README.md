@@ -2,6 +2,12 @@
 
 Jackson module that adds support for serializing and deserializing MessagePack's Values to and from JSON.
 
+## Installation
+
+GitHub Packages:
+
+https://github.com/calorie/jackson-datatype-msgpack/packages/1816861
+
 ## Usage
 
 ### Registering module
