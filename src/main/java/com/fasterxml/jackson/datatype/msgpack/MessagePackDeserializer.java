@@ -30,6 +30,9 @@ import java.util.Map;
 import org.msgpack.value.Value;
 import org.msgpack.value.ValueFactory;
 
+/**
+* MessagePackDeserializer.
+*/
 public class MessagePackDeserializer extends StdDeserializer<Value> {
     public MessagePackDeserializer() throws JsonMappingException {
         super(Value.class);

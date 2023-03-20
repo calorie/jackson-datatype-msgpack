@@ -27,7 +27,9 @@ import org.msgpack.value.ArrayValue;
 import org.msgpack.value.MapValue;
 import org.msgpack.value.Value;
 
-
+/**
+* MessagePackSerializer.
+*/
 public class MessagePackSerializer extends StdSerializer<Value> {
     public MessagePackSerializer() {
         super(Value.class);
@@ -58,7 +60,7 @@ public class MessagePackSerializer extends StdSerializer<Value> {
                 generator.writeNumber(value.asFloatValue().toDouble());
                 break;
             case STRING:
-                generator.writeNumber(value.asStringValue().toString());
+                generator.writeString(value.asStringValue().toString());
                 break;
             case BINARY:
                 generator.writeBinary(value.asBinaryValue().asByteArray());

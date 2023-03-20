@@ -24,6 +24,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.Deserializers;
 import org.msgpack.value.Value;
 
+/**
+* MessagePackDeserializerFactory.
+*/
 public class MessagePackDeserializerFactory extends Deserializers.Base {
     public MessagePackDeserializerFactory() {
     }
