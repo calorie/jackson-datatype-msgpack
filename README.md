@@ -18,6 +18,7 @@ mapper.registerModule(new MessagePackModule());
 ```
 
 Sample code:
+
 ```java
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -49,4 +50,10 @@ public class Sample
         System.out.println("2: " + mapper.treeToValue(on, Value.class).toJson());
     }
 }
+```
+
+## Development
+
+```sh
+docker compose run --rm java ./gradlew test
 ```
