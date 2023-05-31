@@ -23,7 +23,7 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
     api 'org.msgpack:msgpack-core:0.9.3'
-    api 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
+    api 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
     api 'com.fasterxml.jackson.core:jackson-core:2.14.2'
     api 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
 
